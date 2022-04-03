@@ -209,7 +209,7 @@ class ImageGraph:
         myStack.push(self.nodes[start_index])
         while myStack is not None:
             node = myStack.peek()
-            i = None
+            i = -1
             for j in range(len(node.edges)):
                 if node.edges[j].visited is False:
                     i = j
