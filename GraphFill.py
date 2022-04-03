@@ -211,7 +211,7 @@ class ImageGraph:
             node = myStack.peek()
             i = -1
             for j in range(len(node.edges)):
-                if node.edges[j].visited is False:
+                if self.nodes[node.edges[j]].visited is False:
                     i = j
                     break
             if i == -1:
