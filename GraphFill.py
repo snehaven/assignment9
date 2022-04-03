@@ -176,7 +176,19 @@ class ImageGraph:
         print("Starting BFS; initial state:")
         self.print_image()
 
-        raise NotImplementedError("Remove this exception and implement the bfs algorithm here.")
+        myQueue = Queue()
+        self.nodes[start_index].visited = True
+        self.nodes[start_index].set_color(color)
+        self.print_image()
+        myQueue.enqueue(self.nodes[start_index])
+        while myQueue is not None:
+            node = myQueue.dequeue()
+            for i in node.edges:
+                if self.nodes[i].visited is False:
+                    self.nodes[i].visited = True
+                    self.nodes[i].set_color(color)
+                    self.print_image()
+                    myQueue.enqueue(self.nodes[i])
 
 
     # implement your dfs algorithm here. Call print_image() after coloring a node
@@ -190,7 +202,25 @@ class ImageGraph:
         print("Starting DFS; initial state:")
         self.print_image()
 
-        raise NotImplementedError("Remove this exception and implement the dfs algorithm here.")
+        myStack = Stack()
+        self.nodes[start_index].visited = True
+        self.nodes[start_index].set_color(color)
+        self.print_image()
+        myStack.push(self.nodes[start_index])
+        while myStack is not None:
+            node = myStack.peek()
+            i = None
+            for j in range(len(node.edges)):
+                if node.edges[j].visited is False:
+                    i = j
+                    break
+            if i == -1:
+                i = myStack.pop()
+            else:
+                self.nodes[i].visited = True
+                self.nodes[i].set_color(color)
+                self.print_image()
+                myStack.push(self.nodes[i])
 
 
 def main():
