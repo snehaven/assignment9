@@ -207,12 +207,12 @@ class ImageGraph:
         self.nodes[start_index].set_color(color)
         self.print_image()
         myStack.push(self.nodes[start_index])
-        while myStack is not None:
+        while (not myStack.is_empty()):
             node = myStack.peek()
             i = -1
             for j in range(len(node.edges)):
-                if self.nodes[node.edges[j]].visited is False:
-                    i = j
+                if not self.nodes[node.edges[j]].visited:
+                    i = node.edges[j]
                     break
             if i == -1:
                 i = myStack.pop()
