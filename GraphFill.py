@@ -176,16 +176,19 @@ class ImageGraph:
         myQueue = Queue()
         self.nodes[start_index].visited = True
         self.nodes[start_index].set_color(color)
+        previous_color = self.nodes[start_index].prev_color
         self.print_image()
         myQueue.enqueue(self.nodes[start_index])
         while myQueue.is_empty() is not True:
             node = myQueue.dequeue()
             for i in node.edges:
-                if self.nodes[i].visited is False:
+                if not self.nodes[i].visited:
                     self.nodes[i].visited = True
-                    self.nodes[i].set_color(color)
-                    self.print_image()
+                    if self.nodes[i].color == previous_color:
+                        self.nodes[i].set_color(color)
+                        self.print_image()
                     myQueue.enqueue(self.nodes[i])
+            print()
 
 
     # implement your dfs algorithm here. Call print_image() after coloring a node
@@ -203,10 +206,9 @@ class ImageGraph:
         myStack = Stack()
         self.nodes[start_index].visited = True
         self.nodes[start_index].set_color(color)
+        previous_color = self.nodes[start_index].prev_color
         self.print_image()
         myStack.push(self.nodes[start_index])
-
-
 
         while (not myStack.is_empty()):
             node = myStack.peek()
@@ -219,8 +221,9 @@ class ImageGraph:
                 i = myStack.pop()
             else:
                 self.nodes[i].visited = True
-                self.nodes[i].set_color(color)
-                self.print_image()
+                if self.nodes[i].color == previous_color:
+                    self.nodes[i].set_color(color)
+                    self.print_image()
                 myStack.push(self.nodes[i])
         return None
 
