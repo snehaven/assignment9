@@ -1,13 +1,13 @@
 #  File: GraphFill.py
-#  Description:
-#  Student Name:
-#  Student UT EID:
-#  Partner Name:
-#  Partner UT EID:
+#  Description:Performs fill function with bfs and dfs
+#  Student Name: Sneha Venkatesan
+#  Student UT EID: sv23377
+#  Partner Name: Liyan Deng
+#  Partner UT EID: ld26995
 #  Course Name: CS 313E
-#  Unique Number:
-#  Date Created:
-#  Date Last Modified:
+#  Unique Number: 51130
+#  Date Created: 4-4-2022
+#  Date Last Modified: 4-4-2022
 
 import os
 import sys
@@ -103,6 +103,7 @@ class ColorNode:
     def __init__(self, x, y, color):
         self.color = color
         self.prev_color = color
+        self.orig_color = color
         self.x = x
         self.y = y
         self.edges = []
@@ -125,7 +126,7 @@ class ImageGraph:
     def __init__(self, image_size):
         self.nodes = []
         self.image_size = image_size
-        self.adj_matrix = [[0 for i in range(image_size)]for j in range(image_size)]
+        self.adj_matrix = []
 
     def add_edge(self, start_index, end_index):
          self.nodes[start_index].add_edge(end_index)
@@ -165,10 +166,6 @@ class ImageGraph:
         # empty line afterwards
         print()
 
-    # implement your bfs algorithm here. Call print_image() after coloring a node
-    # Input: graph is the graph containing the nodes
-    #   start_index is the index of the currently visited node
-    #   color is the color to fill the area containing the current node with
     def bfs(self, start_index, color):
         # reset visited status
         self.reset_visited()
@@ -181,7 +178,7 @@ class ImageGraph:
         self.nodes[start_index].set_color(color)
         self.print_image()
         myQueue.enqueue(self.nodes[start_index])
-        while myQueue is not None:
+        while myQueue.is_empty() is not True:
             node = myQueue.dequeue()
             for i in node.edges:
                 if self.nodes[i].visited is False:
@@ -198,6 +195,7 @@ class ImageGraph:
     def dfs(self, start_index, color):
         # reset visited status
         self.reset_visited()
+
         # print initial state
         print("Starting DFS; initial state:")
         self.print_image()
@@ -207,6 +205,9 @@ class ImageGraph:
         self.nodes[start_index].set_color(color)
         self.print_image()
         myStack.push(self.nodes[start_index])
+
+
+
         while (not myStack.is_empty()):
             node = myStack.peek()
             i = -1
@@ -221,6 +222,7 @@ class ImageGraph:
                 self.nodes[i].set_color(color)
                 self.print_image()
                 myStack.push(self.nodes[i])
+        return None
 
 
 def main():
@@ -235,6 +237,8 @@ def main():
     line = sys.stdin.readline()
     line = line.strip()
     num_vertices = int (line)
+
+    graph.adj_matrix = [[0 for i in range(num_vertices)]for j in range(num_vertices)]
 
     # read the vertices to the list of Vertices
     for i in range (num_vertices):
@@ -272,7 +276,6 @@ def main():
     dfs_start = int (dfs[0])
     dfs_color = dfs[1]
 
-    print(dfs_color)
 
     # print matrix
     graph.print_adjacency_matrix()
